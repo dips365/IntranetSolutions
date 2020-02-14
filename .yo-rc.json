@@ -1,0 +1,12 @@
+{
+  "@microsoft/generator-sharepoint": {
+    "version": "1.9.1",
+    "libraryName": "intranet-solutions",
+    "libraryId": "82d622f3-aece-4bc2-a13e-14dd3f51df26",
+    "environment": "spo",
+    "packageManager": "npm",
+    "isCreatingSolution": true,
+    "isDomainIsolated": false,
+    "componentType": "webpart"
+  }
+}
