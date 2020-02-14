@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as ReactDom from 'react-dom';
-import { Version } from '@microsoft/sp-core-library';
+import { Version, DisplayMode } from '@microsoft/sp-core-library';
 import {
   BaseClientSideWebPart,
   IPropertyPaneConfiguration,
@@ -14,6 +14,9 @@ import { ICountryWiseHolidaysProps } from './components/ICountryWiseHolidaysProp
 export interface ICountryWiseHolidaysWebPartProps {
   description: string;
   listName:string;
+  title: string;
+  displayMode: DisplayMode;
+  updateProperty: (value: string) => void;
 }
 
 export default class CountryWiseHolidaysWebPart extends BaseClientSideWebPart<ICountryWiseHolidaysWebPartProps> {
@@ -26,8 +29,13 @@ export default class CountryWiseHolidaysWebPart extends BaseClientSideWebPart<IC
         listName:this.properties.listName,
         spHttpClient:this.context.spHttpClient,
         siteUrl:this.context.pageContext.site.absoluteUrl,
-        title:"Country Wise Holidays"
+        title:"Country Wise Holidays",
+        displayMode: this.displayMode,
+        updateProperty: (value: string) => {
+          this.properties.title = value;
+        }
       }
+
     );
 
     ReactDom.render(element, this.domElement);

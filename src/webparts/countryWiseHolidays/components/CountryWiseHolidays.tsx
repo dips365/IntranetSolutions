@@ -5,7 +5,7 @@ import { IStackTokens, Stack  } from "office-ui-fabric-react/lib/Stack";
 import { Dropdown, DropdownMenuItemType, IDropdownStyles, IDropdownOption } from 'office-ui-fabric-react/lib/Dropdown';
 
 import { IHolidayListItem } from "../models/IHolidayListItem";
-
+import { Environment,EnvironmentType } from "@microsoft/sp-core-library";
 const dropdownStyles: Partial<IDropdownStyles> = {
   dropdown: { width: 300 }
 };
@@ -30,7 +30,7 @@ const options: IDropdownOption[] = [
 const stackTokens: IStackTokens = { childrenGap: 20 };
 
 export default class CountryWiseHolidays extends React.Component<ICountryWiseHolidaysProps, ICountryWiseHolidaysState> {
-  
+
   constructor(props:ICountryWiseHolidaysProps,state:ICountryWiseHolidaysState){
     super(props);
     this.state={
@@ -40,11 +40,19 @@ export default class CountryWiseHolidays extends React.Component<ICountryWiseHol
       loaderMessage:"Loading..."
     };
 
-    this.GetCountryNames();
+    if(Environment.type === EnvironmentType.SharePoint){
+      this.GetCountryNames();
+    }
+    else{
+      this.state = {
+        status:"Please connect to SharePoint Server",
+        items:options,
+        isLoading:false,
+        loaderMessage:"Loading..."
+      };
+    }
+
   }
-
-
-
 
   public render(): React.ReactElement<ICountryWiseHolidaysProps> {
     return (
@@ -56,13 +64,17 @@ export default class CountryWiseHolidays extends React.Component<ICountryWiseHol
               <p className={ styles.subTitle }>Customize SharePoint experiences using Web Parts.</p>
               <p className={ styles.description }>{escape(this.props.description)}</p>
               <p className={styles.description}>{escape(this.props.listName)}</p>
+              <p>{this.state.status}</p>
+
               <Stack tokens={stackTokens}>
+
                  <Dropdown placeholder="Select options"
                     label="Multi-select uncontrolled example"
-                    options={options}
+                    options={this.state.items}
                     styles={dropdownStyles}
                     onChange={this.onChangeEvent}>
-                  </Dropdown>
+                 </Dropdown>
+
               </Stack>
              </div>
           </div>
@@ -77,7 +89,7 @@ export default class CountryWiseHolidays extends React.Component<ICountryWiseHol
 
   private GetCountryNames():void {
     try {
-      let getCountriesEndPoint = this.props.siteUrl + `/_api/web/Lists/GetByTitle('${this.props.listName}')/items?$select=Title`;
+      let getCountriesEndPoint = this.props.siteUrl + `/_api/web/Lists/GetByTitle('${this.props.listName}')/items?$select=Id,Title`;
 
       this.props.spHttpClient.get(
         getCountriesEndPoint,
@@ -89,9 +101,23 @@ export default class CountryWiseHolidays extends React.Component<ICountryWiseHol
           }
         })
         .then((response:SPHttpClientResponse):Promise<{value:IHolidayListItem[]}>=>{
-          return response.json()
+          return response.json();
         }).then((response:{value:IHolidayListItem[]}):void=>{
-          let listItemCollection = [...response.value];
+
+          let countries:IDropdownOption[];
+          // var Options:Array<IDropdownOption> = new Array<IDropdownOption>();
+          response.value.map((item:IHolidayListItem)=>{
+            options.push({key:item.Title,text:item.Title});
+          });
+
+          this.state = {
+            isLoading:false,
+            items:options,
+            loaderMessage:"",
+            status :"Completed"
+          };
+          //let listItemCollection = [...response.value];
+
         });
 
     } catch (error) {

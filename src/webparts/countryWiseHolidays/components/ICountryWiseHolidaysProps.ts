@@ -8,5 +8,6 @@ export interface ICountryWiseHolidaysProps {
   spHttpClient:SPHttpClient;
   siteUrl:string;
   title:string;
-  
+  displayMode: DisplayMode;
+  updateProperty: (value: string) => void;
 }
