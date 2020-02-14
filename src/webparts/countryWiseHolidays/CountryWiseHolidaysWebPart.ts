@@ -13,6 +13,7 @@ import { ICountryWiseHolidaysProps } from './components/ICountryWiseHolidaysProp
 
 export interface ICountryWiseHolidaysWebPartProps {
   description: string;
+  listName:string;
 }
 
 export default class CountryWiseHolidaysWebPart extends BaseClientSideWebPart<ICountryWiseHolidaysWebPartProps> {
@@ -21,7 +22,11 @@ export default class CountryWiseHolidaysWebPart extends BaseClientSideWebPart<IC
     const element: React.ReactElement<ICountryWiseHolidaysProps > = React.createElement(
       CountryWiseHolidays,
       {
-        description: this.properties.description
+        description: this.properties.description,
+        listName:this.properties.listName,
+        spHttpClient:this.context.spHttpClient,
+        siteUrl:this.context.pageContext.site.absoluteUrl,
+        title:"Country Wise Holidays"
       }
     );
 
@@ -49,6 +54,9 @@ export default class CountryWiseHolidaysWebPart extends BaseClientSideWebPart<IC
               groupFields: [
                 PropertyPaneTextField('description', {
                   label: strings.DescriptionFieldLabel
+                }),
+                PropertyPaneTextField('listName',{
+                  label:strings.ListFieldLabel
                 })
               ]
             }
