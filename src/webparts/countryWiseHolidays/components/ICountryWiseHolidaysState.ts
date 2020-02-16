@@ -5,4 +5,5 @@ export interface ICountryWiseHolidaysState{
     items:IDropdownOption[];
     isLoading:boolean;
     loaderMessage:string;
+    selectedValue:string;
 }

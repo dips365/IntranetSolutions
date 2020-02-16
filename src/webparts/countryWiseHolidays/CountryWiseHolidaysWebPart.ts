@@ -31,6 +31,7 @@ export default class CountryWiseHolidaysWebPart extends BaseClientSideWebPart<IC
         siteUrl:this.context.pageContext.site.absoluteUrl,
         title:"Country Wise Holidays",
         displayMode: this.displayMode,
+        country:this.context.pageContext.cultureInfo.currentCultureName,
         updateProperty: (value: string) => {
           this.properties.title = value;
         }
