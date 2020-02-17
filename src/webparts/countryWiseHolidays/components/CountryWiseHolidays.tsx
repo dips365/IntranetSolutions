@@ -8,7 +8,7 @@ import { IHolidayListItem } from "../models/IHolidayListItem";
 import { List } from "office-ui-fabric-react/lib/List";
 import { Environment,EnvironmentType, DisplayMode } from "@microsoft/sp-core-library";
 const dropdownStyles: Partial<IDropdownStyles> = {
-  dropdown: { width: 300 }
+  dropdown: {}
 };
 import { ListView, IViewField, SelectionMode, GroupOrder, IGrouping } from "@pnp/spfx-controls-react/lib/ListView";
 import { ICountryWiseHolidaysProps } from './ICountryWiseHolidaysProps';
@@ -36,9 +36,10 @@ export default class CountryWiseHolidays extends React.Component<ICountryWiseHol
       selectedValue:"",
       HolidayItems:[]
     };
+    
  }
-
   public render(): React.ReactElement<ICountryWiseHolidaysProps> {
+    var names = ['Jake', 'Jon', 'Thruster'];
     return (
       <div className={ styles.countryWiseHolidays }>
         <div className={ styles.container }>
@@ -53,9 +54,29 @@ export default class CountryWiseHolidays extends React.Component<ICountryWiseHol
                     label="Select Country"
                     options={this.state.items}
                     styles={dropdownStyles}
-                    onChange={this.onChange}>
+                    onChanged={this.onChanged.bind(this)}>
                  </Dropdown>
-                 <List items={this.state.HolidayItems}></List>
+                if ({this.state.HolidayItems.length === 0}) {
+                  console.log(this.state.HolidayItems.length)
+                }
+                else
+                {
+                  <ul className={styles["event-list"]}>
+                    {this.state.HolidayItems.map((item,index) => {
+                      return (
+                        <li>
+                            <div className={styles.time}>
+                              <span className={styles.day}>4</span>
+                              <span className={styles.month}>Jan</span>
+                            </div>
+                            <div className={styles.info}>
+                              <h2 className={styles.title}>{item.Title}</h2>
+                            </div>
+                        </li>
+                      );
+                    })};
+                </ul>
+                }
                 </Stack>
              </div>
           </div>
@@ -64,18 +85,23 @@ export default class CountryWiseHolidays extends React.Component<ICountryWiseHol
     );
   }
 
+  private onChanged(event){
+    var newValue = event.key;
+    this.getHolidaysBasedOnSelectedCountry(newValue);
+  }
+
   private onChange=(ev:any,selectedOption:IDropdownOption | undefined):void=>{
     const selectedKey: string = selectedOption ? (selectedOption.key as string):"";
     this.setState({
       selectedValue:selectedKey
     });
 
-    this.getHolidaysBasedOnSelectedCountry();
+  //  this.getHolidaysBasedOnSelectedCountry(newva);
   }
 
-  private getHolidaysBasedOnSelectedCountry():void {
+  private getHolidaysBasedOnSelectedCountry(newValue:string):void {
     let getHolodayList = this.props.siteUrl + `/_api/web/Lists/
-    GetByTitle('${this.props.listName}')/items?$select=Title,HolidayDate&$filter= Country eq '${this.state.selectedValue}'`;
+    GetByTitle('${this.props.listName}')/items?$select=Title,HolidayDate&$filter= Country eq '${newValue}'`;
 
     this.props.spHttpClient.get(
       getHolodayList,
@@ -88,9 +114,17 @@ export default class CountryWiseHolidays extends React.Component<ICountryWiseHol
       }).then((response:SPHttpClientResponse):Promise<{value:IListItem[]}>=>{
         return response.json();
       }).then((response:{value:IListItem[]}):void=>{
-        this.setState({
-          HolidayItems:response.value
-        });
+        if(response.value.length !== 0){
+          this.setState({
+            HolidayItems:response.value
+          });
+        }
+        else{
+          this.setState({
+            HolidayItems:[]
+          });
+        }
+       
       });
   }
 

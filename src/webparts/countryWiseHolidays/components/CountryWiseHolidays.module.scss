@@ -1,6 +1,7 @@
 @import '~office-ui-fabric-react/dist/sass/References.scss';
 
 .countryWiseHolidays {
+
   .container {
     max-width: 700px;
     margin: 0px auto;
@@ -10,7 +11,7 @@
   .row {
     @include ms-Grid-row;
     @include ms-fontColor-white;
-    background-color: $ms-color-themeDark;
+    background-color: #ffffff;
     padding: 20px;
   }
 
@@ -70,5 +71,91 @@
       vertical-align: top;
       display: inline-block;
     }
+ }
+
+ .event-list {
+  list-style: none;
+  font-family: 'Lato', sans-serif;
+  margin: 0px;
+  padding: 0px;
+}
+.event-list > li {
+  background-color: rgb(255, 255, 255);
+  padding: 0px;
+  margin: 0px 0px 20px;
+}
+.event-list > li > .time {
+  display: inline-block;
+  width: 100%;
+  color: rgb(255, 255, 255);
+  background-color: rgb(237, 28, 36);
+  padding: 5px 0px;
+  text-align: center;
+  text-transform: uppercase;
+}
+.day {
+  display: block;
+  font-size: 30pt;
+  font-weight: 100;
+  line-height: 1;
+  font-family: initial;
+}
+.month {
+  display: block;
+  font-size: 15pt;
+  font-weight: 900;
+  line-height: 1;
+}
+.event-list > li > .info {
+  padding-top: 5px;
+  text-align: center;
+  background-color: rgb(245, 245, 245);
+}
+.event-list > li > .info > .title {
+  font-size: 15pt;
+  font-weight: 700;
+  margin: 0px;
+  color: #5d5d5d;
+}
+ @media (min-width: 554px) {
+  .event-list > li {
+      position: relative;
+      display: block;
+      width: 100%;
+      height: 75px;
+      padding: 0px;
   }
+  .event-list > li > .time {
+      display: inline-block;
+  }
+  .event-list > li > .time{
+      width: 75px;
+      float: left;
+  }
+  .event-list > li > .info {
+      background-color: rgb(245, 245, 245);
+      overflow: hidden;
+  }
+  .event-list > li > .time{
+      width: 75px;
+      height: 75px;
+      padding: 0px;
+      margin: 0px;
+  }
+  .event-list > li > .info {
+      position: relative;
+      height: 70px;
+      text-align: left;
+      padding-right: 40px;
+  }	
+  .event-list > li > .info > .title{
+      padding: 0px 10px;
+      margin: 20px 0px;
+  }
+  .event-list > li > .info > ul {
+      position: absolute;
+      left: 0px;
+      bottom: 0px;
+  }
+}
 }
