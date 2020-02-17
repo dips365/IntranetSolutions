@@ -45,7 +45,7 @@ export default class CountryWiseHolidays extends React.Component<ICountryWiseHol
         <div className={ styles.container }>
           <div className={ styles.row }>
             <div className={ styles.column }>
-              <Stack tokens={stackTokens}>
+              {/* <Stack tokens={stackTokens}> */}
                 <WebPartTitle displayMode={this.props.displayMode}
                 title={this.props.title}
                 updateProperty={this.props.updateProperty}>
@@ -57,7 +57,6 @@ export default class CountryWiseHolidays extends React.Component<ICountryWiseHol
                     onChanged={this.onChanged.bind(this)}>
                  </Dropdown>
                 if ({this.state.HolidayItems.length === 0}) {
-                  console.log(this.state.HolidayItems.length)
                 }
                 else
                 {
@@ -77,7 +76,7 @@ export default class CountryWiseHolidays extends React.Component<ICountryWiseHol
                     })};
                 </ul>
                 }
-                </Stack>
+                {/* </Stack> */}
              </div>
           </div>
         </div>
