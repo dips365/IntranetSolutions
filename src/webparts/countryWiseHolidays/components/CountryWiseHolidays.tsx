@@ -3,13 +3,14 @@ import styles from './CountryWiseHolidays.module.scss';
 
 import { IStackTokens, Stack  } from "office-ui-fabric-react/lib/Stack";
 import { Dropdown, DropdownMenuItemType, IDropdownStyles, IDropdownOption } from 'office-ui-fabric-react/lib/Dropdown';
-
+import { IListItem } from "../models/IListItem";
 import { IHolidayListItem } from "../models/IHolidayListItem";
+import { List } from "office-ui-fabric-react/lib/List";
 import { Environment,EnvironmentType, DisplayMode } from "@microsoft/sp-core-library";
 const dropdownStyles: Partial<IDropdownStyles> = {
   dropdown: { width: 300 }
 };
-
+import { ListView, IViewField, SelectionMode, GroupOrder, IGrouping } from "@pnp/spfx-controls-react/lib/ListView";
 import { ICountryWiseHolidaysProps } from './ICountryWiseHolidaysProps';
 import { escape } from '@microsoft/sp-lodash-subset';
 import { ICountryWiseHolidaysState } from "./ICountryWiseHolidaysState";
@@ -32,7 +33,8 @@ export default class CountryWiseHolidays extends React.Component<ICountryWiseHol
       items:options,
       isLoading:false,
       loaderMessage:"Loading...",
-      selectedValue:""
+      selectedValue:"",
+      HolidayItems:[]
     };
  }
 
@@ -42,19 +44,19 @@ export default class CountryWiseHolidays extends React.Component<ICountryWiseHol
         <div className={ styles.container }>
           <div className={ styles.row }>
             <div className={ styles.column }>
-              <p className={styles.description}>{escape(this.props.listName)}</p>
-              <p>{this.state.status}</p>
-              <p>{this.state.selectedValue}</p>
-              |<Stack tokens={stackTokens}>
-
+              <Stack tokens={stackTokens}>
+                <WebPartTitle displayMode={this.props.displayMode}
+                title={this.props.title}
+                updateProperty={this.props.updateProperty}>
+                   </WebPartTitle>
                  <Dropdown placeholder="Select options"
-                    label="Multi-select uncontrolled example"
+                    label="Select Country"
                     options={this.state.items}
                     styles={dropdownStyles}
                     onChange={this.onChange}>
                  </Dropdown>
-
-              </Stack>
+                 <List items={this.state.HolidayItems}></List>
+                </Stack>
              </div>
           </div>
         </div>
@@ -73,7 +75,7 @@ export default class CountryWiseHolidays extends React.Component<ICountryWiseHol
 
   private getHolidaysBasedOnSelectedCountry():void {
     let getHolodayList = this.props.siteUrl + `/_api/web/Lists/
-    GetByTitle('${this.props.listName}')/items?$select=Id,Title,HolidayDate&$filter= Country eq '${this.state.selectedValue}'`;
+    GetByTitle('${this.props.listName}')/items?$select=Title,HolidayDate&$filter= Country eq '${this.state.selectedValue}'`;
 
     this.props.spHttpClient.get(
       getHolodayList,
@@ -83,10 +85,12 @@ export default class CountryWiseHolidays extends React.Component<ICountryWiseHol
           'Accept': 'application/json;odata=nometadata',
           'odata-version': ''
         }
-      }).then((response:SPHttpClientResponse):Promise<{value:IHolidayListItem[]}>=>{
+      }).then((response:SPHttpClientResponse):Promise<{value:IListItem[]}>=>{
         return response.json();
-      }).then((response:{value:IHolidayListItem[]}):void=>{
-        console.log(response);
+      }).then((response:{value:IListItem[]}):void=>{
+        this.setState({
+          HolidayItems:response.value
+        });
       });
   }
 
