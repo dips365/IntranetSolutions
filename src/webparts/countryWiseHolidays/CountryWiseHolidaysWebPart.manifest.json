@@ -21,7 +21,8 @@
     "description": { "default": "Display holiday list from sharepoint list " },
     "officeFabricIconFontName": "Page",
     "properties": {
-      "description": "CountryWiseHolidays"
+      "description": "CountryWiseHolidays",
+      "listName":"HolidayList"
     }
   }]
 }

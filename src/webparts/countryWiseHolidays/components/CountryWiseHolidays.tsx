@@ -22,6 +22,11 @@ const options: IDropdownOption[] = [
   { key: 'Geremany', text: 'Geremany' }
 ];
 
+const monthShortNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+"Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+];
+
+
 const stackTokens: IStackTokens = { childrenGap: 20 };
 
 export default class CountryWiseHolidays extends React.Component<ICountryWiseHolidaysProps, ICountryWiseHolidaysState> {
@@ -36,7 +41,7 @@ export default class CountryWiseHolidays extends React.Component<ICountryWiseHol
       selectedValue:"",
       HolidayItems:[]
     };
-    
+
  }
   public render(): React.ReactElement<ICountryWiseHolidaysProps> {
     var names = ['Jake', 'Jon', 'Thruster'];
@@ -65,9 +70,10 @@ export default class CountryWiseHolidays extends React.Component<ICountryWiseHol
                       return (
                         <li>
                             <div className={styles.time}>
-                              <span className={styles.day}>4</span>
-                              <span className={styles.month}>Jan</span>
+                            <span className={styles.day}>{new Date(item.HolidayDate.toString()).getDay()}</span>
+                              <span className={styles.month}>{monthShortNames[new Date(item.HolidayDate.toString()).getMonth()]}</span>
                             </div>
+
                             <div className={styles.info}>
                               <h2 className={styles.title}>{item.Title}</h2>
                             </div>
@@ -83,6 +89,7 @@ export default class CountryWiseHolidays extends React.Component<ICountryWiseHol
       </div>
     );
   }
+
 
   private onChanged(event){
     var newValue = event.key;
@@ -123,7 +130,7 @@ export default class CountryWiseHolidays extends React.Component<ICountryWiseHol
             HolidayItems:[]
           });
         }
-       
+
       });
   }
 
