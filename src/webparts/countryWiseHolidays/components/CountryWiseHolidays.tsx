@@ -17,7 +17,7 @@ import { ICountryWiseHolidaysState } from "./ICountryWiseHolidaysState";
 import { SPHttpClient,SPHttpClientResponse,ISPHttpClientOptions } from "@microsoft/sp-http";
 import { WebPartTitle } from "@pnp/spfx-controls-react/lib/WebPartTitle";
 const options: IDropdownOption[] = [
-  { key: 'India', text: 'India'},
+  { key: 'India', text: 'India',isSelected:true},
   { key: 'US', text: 'US' },
   { key: 'Geremany', text: 'Geremany' }
 ];
@@ -40,18 +40,16 @@ export default class CountryWiseHolidays extends React.Component<ICountryWiseHol
       items:options,
       isLoading:false,
       loaderMessage:"Loading...",
-      selectedValue:"",
+      selectedValue:"India",
       HolidayItems:[]
     };
 
- }
+    this.getHolidaysBasedOnSelectedCountry(this.state.selectedValue.toString());
+  }
   public render(): React.ReactElement<ICountryWiseHolidaysProps> {
-    var names = ['Jake', 'Jon', 'Thruster'];
     return (
       <div className={ styles.countryWiseHolidays }>
-        <div className={ styles.container }>
           <div className={ styles.row }>
-            <div className={ styles.column }>
               {/* <Stack tokens={stackTokens}> */}
                 <WebPartTitle displayMode={this.props.displayMode}
                 title={this.props.title}
@@ -63,11 +61,7 @@ export default class CountryWiseHolidays extends React.Component<ICountryWiseHol
                     styles={dropdownStyles}
                     onChanged={this.onChanged.bind(this)}>
                  </Dropdown>
-                if ({this.state.HolidayItems.length === 0}) {
-                }
-                else
-                {
-                  <ul className={styles.eventlist}>
+                 <ul className={styles.eventlist}>
                     {this.state.HolidayItems.map((item,index) => {
                       return (
                         <li>
@@ -84,11 +78,7 @@ export default class CountryWiseHolidays extends React.Component<ICountryWiseHol
                       );
                     })};
                 </ul>
-                }
-                {/* </Stack> */}
-             </div>
           </div>
-        </div>
       </div>
     );
   }

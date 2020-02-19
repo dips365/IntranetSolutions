@@ -11,7 +11,7 @@
     @include ms-Grid-row;
     @include ms-fontColor-white;
     background-color: #ffffff;
-    padding: 20px;
+    margin: 5px 10px;
   }
 
   .column {
@@ -80,10 +80,33 @@
     font-family: 'Lato', sans-serif;
     margin: 0px;
     padding: 0px;
-    max-height: 100px;
+    max-height: 290px;
     overflow: hidden;
     overflow-y: auto;
   }
+
+
+  .eventlist::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  /* Track */
+  .eventlist::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 10px;
+  }
+
+  /* Handle */
+  .eventlist::-webkit-scrollbar-thumb {
+    background: rgb(237, 28, 36);
+    border-radius: 10px;
+  }
+
+  /* Handle on hover */
+  .eventlist::-webkit-scrollbar-thumb:hover {
+    background: #ffeded;
+  }
+
   .eventlist ::-webkit-scrollbar {
     display: none;
   }
@@ -91,7 +114,7 @@
   .eventlist>li {
     background-color: rgb(255, 255, 255);
     padding: 0px;
-    margin: 0px 0px 10px;
+    margin: 5px 0px 10px;
   }
 
   .eventlist>li>.time {
@@ -106,7 +129,7 @@
 
   .day {
     display: block;
-    font-size: 20pt;
+    font-size: 15pt;
     font-weight: 100;
     line-height: 1;
     font-family: initial;
@@ -122,7 +145,7 @@
     font-size: 10pt;
     padding: 0px 10px;
     color: #757575;
-    line-height: 2.2;
+    line-height: 1;
   }
 
   .eventlist>li>.info {
@@ -132,7 +155,7 @@
   }
 
   .eventlist>li>.info>.title {
-    font-size: 13pt;
+    font-size: 11pt;
     font-weight: 600;
     margin: 0px;
     color: #5d5d5d;
@@ -143,7 +166,7 @@
       position: relative;
       display: block;
       width: 100%;
-      height: 50px;
+      height: 40px;
       padding: 0px;
       background: #ffeded!important;
       border-radius: 50px;
@@ -155,8 +178,8 @@
     }
 
     .eventlist>li>.time {
-      width: 50px;
-      height: 50px;
+      width: 40px;
+      height: 40px;
       padding: 0px;
       margin: 0px;
       border-radius: 50px;
@@ -165,7 +188,7 @@
 
     .eventlist>li>.info {
       position: relative;
-      height: 45px;
+      height: 35px;
       text-align: left;
     }
 
@@ -179,6 +202,8 @@
       left: 0px;
       bottom: 0px;
     }
+
+
   }
 
 }
