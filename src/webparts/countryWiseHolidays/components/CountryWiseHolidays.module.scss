@@ -1,7 +1,6 @@
 @import '~office-ui-fabric-react/dist/sass/References.scss';
 
 .countryWiseHolidays {
-
   .container {
     max-width: 700px;
     margin: 0px auto;
@@ -37,6 +36,9 @@
     @include ms-font-l;
     @include ms-fontColor-white;
   }
+  dropdown{
+    width: 100%;
+  }
 
   .button {
     // Our button
@@ -52,7 +54,7 @@
     // Basic Button
     outline: transparent;
     position: relative;
-    font-family: "Segoe UI WestEuropean","Segoe UI",-apple-system,BlinkMacSystemFont,Roboto,"Helvetica Neue",sans-serif;
+    font-family: "Segoe UI WestEuropean", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
     -webkit-font-smoothing: antialiased;
     font-size: $ms-font-size-m;
     font-weight: $ms-font-weight-regular;
@@ -71,91 +73,112 @@
       vertical-align: top;
       display: inline-block;
     }
- }
+  }
 
- .event-list {
-  list-style: none;
-  font-family: 'Lato', sans-serif;
-  margin: 0px;
-  padding: 0px;
-}
-.event-list > li {
-  background-color: rgb(255, 255, 255);
-  padding: 0px;
-  margin: 0px 0px 20px;
-}
-.event-list > li > .time {
-  display: inline-block;
-  width: 100%;
-  color: rgb(255, 255, 255);
-  background-color: rgb(237, 28, 36);
-  padding: 5px 0px;
-  text-align: center;
-  text-transform: uppercase;
-}
-.day {
-  display: block;
-  font-size: 30pt;
-  font-weight: 100;
-  line-height: 1;
-  font-family: initial;
-}
-.month {
-  display: block;
-  font-size: 15pt;
-  font-weight: 900;
-  line-height: 1;
-}
-.event-list > li > .info {
-  padding-top: 5px;
-  text-align: center;
-  background-color: rgb(245, 245, 245);
-}
-.event-list > li > .info > .title {
-  font-size: 15pt;
-  font-weight: 700;
-  margin: 0px;
-  color: #5d5d5d;
-}
- @media (min-width: 554px) {
-  .event-list > li {
+  .eventlist {
+    list-style: none;
+    font-family: 'Lato', sans-serif;
+    margin: 0px;
+    padding: 0px;
+    max-height: 100px;
+    overflow: hidden;
+    overflow-y: auto;
+  }
+  .eventlist ::-webkit-scrollbar {
+    display: none;
+  }
+
+  .eventlist>li {
+    background-color: rgb(255, 255, 255);
+    padding: 0px;
+    margin: 0px 0px 10px;
+  }
+
+  .eventlist>li>.time {
+    display: inline-block;
+    width: 100%;
+    color: rgb(255, 255, 255);
+    background-color: rgb(237, 28, 36);
+    padding: 5px 0px;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .day {
+    display: block;
+    font-size: 20pt;
+    font-weight: 100;
+    line-height: 1;
+    font-family: initial;
+  }
+
+  .month {
+    display: block;
+    font-size: 10pt;
+    font-weight: 900;
+    line-height: 1;
+  }
+  .weekday {
+    font-size: 10pt;
+    padding: 0px 10px;
+    color: #757575;
+    line-height: 2.2;
+  }
+
+  .eventlist>li>.info {
+    padding-top: 5px;
+    text-align: center;
+    background-color: rgb(245, 245, 245);
+  }
+
+  .eventlist>li>.info>.title {
+    font-size: 13pt;
+    font-weight: 600;
+    margin: 0px;
+    color: #5d5d5d;
+  }
+
+  @media (min-width: 554px) {
+    .eventlist>li {
       position: relative;
       display: block;
       width: 100%;
-      height: 75px;
+      height: 50px;
       padding: 0px;
-  }
-  .event-list > li > .time {
-      display: inline-block;
-  }
-  .event-list > li > .time{
-      width: 75px;
-      float: left;
-  }
-  .event-list > li > .info {
-      background-color: rgb(245, 245, 245);
+      background: #ffeded!important;
+      border-radius: 50px;
+    }
+
+    .eventlist>li>.info {
+      background-color: #ffeded;;
       overflow: hidden;
-  }
-  .event-list > li > .time{
-      width: 75px;
-      height: 75px;
+    }
+
+    .eventlist>li>.time {
+      width: 50px;
+      height: 50px;
       padding: 0px;
       margin: 0px;
-  }
-  .event-list > li > .info {
+      border-radius: 50px;
+      float: left;
+    }
+
+    .eventlist>li>.info {
       position: relative;
-      height: 70px;
+      height: 45px;
       text-align: left;
-      padding-right: 40px;
-  }	
-  .event-list > li > .info > .title{
+    }
+
+    .eventlist>li>.info>.title {
       padding: 0px 10px;
-      margin: 20px 0px;
-  }
-  .event-list > li > .info > ul {
+      margin: 0px;
+    }
+
+    .eventlist>li>.info>ul {
       position: absolute;
       left: 0px;
       bottom: 0px;
+    }
   }
-}
+
 }

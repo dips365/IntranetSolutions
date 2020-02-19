@@ -26,6 +26,8 @@ const monthShortNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
 "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
 ];
 
+const weekdayNames = ["Sunday" , "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
 
 const stackTokens: IStackTokens = { childrenGap: 20 };
 
@@ -65,17 +67,18 @@ export default class CountryWiseHolidays extends React.Component<ICountryWiseHol
                 }
                 else
                 {
-                  <ul className={styles["event-list"]}>
+                  <ul className={styles.eventlist}>
                     {this.state.HolidayItems.map((item,index) => {
                       return (
                         <li>
                             <div className={styles.time}>
-                            <span className={styles.day}>{new Date(item.HolidayDate.toString()).getDay()}</span>
+                            <span className={styles.day}>{new Date(item.HolidayDate.toString()).getDate()}</span>
                               <span className={styles.month}>{monthShortNames[new Date(item.HolidayDate.toString()).getMonth()]}</span>
                             </div>
 
                             <div className={styles.info}>
                               <h2 className={styles.title}>{item.Title}</h2>
+                              <span className={styles.weekday}>{weekdayNames[new Date(item.HolidayDate.toString()).getDay()]}</span>
                             </div>
                         </li>
                       );
