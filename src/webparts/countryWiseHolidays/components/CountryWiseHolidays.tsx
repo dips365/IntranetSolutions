@@ -43,7 +43,7 @@ export default class CountryWiseHolidays extends React.Component<ICountryWiseHol
       selectedValue:"India",
       HolidayItems:[]
     };
-
+    this.GetCurrentCountryFromUserProfile();
     this.getHolidaysBasedOnSelectedCountry(this.state.selectedValue.toString());
   }
   public render(): React.ReactElement<ICountryWiseHolidaysProps> {
@@ -98,6 +98,29 @@ export default class CountryWiseHolidays extends React.Component<ICountryWiseHol
   //  this.getHolidaysBasedOnSelectedCountry(newva);
   }
 
+  private GetCurrentCountryFromUserProfile():void {
+    try {
+      this.props.spHttpClient.get(`${this.props.siteUrl}/_api/SP.UserProfiles.PeopleManager/GetUserProfileProperty(accountName=@v,propertyName='Country')?@v='i:0%23.f|membership|dipen@techinsider.onmicrosoft.com`,
+          SPHttpClient.configurations.v1,
+          {
+            headers: {
+              'Accept': 'application/json;odata=nometadata',
+              'odata-version': ''
+            }
+          }).then((response: SPHttpClientResponse): Promise<{ value: any }> => {
+            return response.json();
+          }) .then((response: { value: any }): void => {
+            //resolve(response.value);
+            var output: any = JSON.stringify(response);
+
+          }, (error: any): void => {
+
+          });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   private getHolidaysBasedOnSelectedCountry(newValue:string):void {
     let getHolodayList = this.props.siteUrl + `/_api/web/Lists/
     GetByTitle('${this.props.listName}')/items?$select=Title,HolidayDate&$filter= Country eq '${newValue}'`;
@@ -126,51 +149,4 @@ export default class CountryWiseHolidays extends React.Component<ICountryWiseHol
 
       });
   }
-
-
-  // private GetCountryNames():void {
-  //   try {
-  //     let getCountriesEndPoint = this.props.siteUrl + `/_api/web/Lists/GetByTitle('${this.props.listName}')/items?$select=Id,Title`;
-
-  //     this.props.spHttpClient.get(
-  //       getCountriesEndPoint,
-  //       SPHttpClient.configurations.v1,
-  //       {
-  //         headers:{
-  //           'Accept': 'application/json;odata=nometadata',
-  //           'odata-version': ''
-  //         }
-  //       })
-  //       .then((response:SPHttpClientResponse):Promise<{value:IHolidayListItem[]}>=>{
-  //         return response.json();
-  //       }).then((response:{value:IHolidayListItem[]}):void=>{
-
-  //         let countries:IDropdownOption[]=[];
-  //         // var Options:Array<IDropdownOption> = new Array<IDropdownOption>();
-  //         response.value.map((item:IHolidayListItem)=>{
-  //           countries.push({key:item.Title,text:item.Title});
-  //         });
-
-  //         // const distinct = (value,index,self)=>{
-  //         //   return self.indexOf(value)===index;
-  //         // };
-
-  //         // const distinctCountirs = countries.filter(distinct);
-
-  //         this.setState({
-  //           isLoading:false,
-  //           items:countries,
-  //           loaderMessage:"",
-  //           status :"Completed"
-  //         });
-
-
-  //         //let listItemCollection = [...response.value];
-
-  //       });
-
-  //   } catch (error) {
-  //     throw error;
-  //   }
-  // }
 }
