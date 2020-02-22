@@ -10,9 +10,10 @@ import {
 import * as strings from 'FullEventCalendarWebPartStrings';
 import FullEventCalendar from './components/FullEventCalendar';
 import { IFullEventCalendarProps } from './components/IFullEventCalendarProps';
-
+import { PropertyPaneSlider } from "@microsoft/sp-property-pane";
 export interface IFullEventCalendarWebPartProps {
   description: string;
+  listName:string;
 }
 
 export default class FullEventCalendarWebPart extends BaseClientSideWebPart<IFullEventCalendarWebPartProps> {
@@ -21,7 +22,8 @@ export default class FullEventCalendarWebPart extends BaseClientSideWebPart<IFul
     const element: React.ReactElement<IFullEventCalendarProps > = React.createElement(
       FullEventCalendar,
       {
-        description: this.properties.description
+        description: this.properties.description,
+        spHttpClient:this.context.spHttpClient
       }
     );
 
@@ -49,6 +51,13 @@ export default class FullEventCalendarWebPart extends BaseClientSideWebPart<IFul
               groupFields: [
                 PropertyPaneTextField('description', {
                   label: strings.DescriptionFieldLabel
+                }),
+                PropertyPaneTextField('listName',{
+                  label:strings.listNameFieldLabel
+                }),
+                PropertyPaneSlider('Limit',{
+                  max:500,
+                  min:50
                 })
               ]
             }
