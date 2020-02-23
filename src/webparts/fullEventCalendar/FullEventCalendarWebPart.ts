@@ -23,7 +23,9 @@ export default class FullEventCalendarWebPart extends BaseClientSideWebPart<IFul
       FullEventCalendar,
       {
         description: this.properties.description,
-        spHttpClient:this.context.spHttpClient
+        spHttpClient:this.context.spHttpClient,
+        siteURL:this.context.pageContext.site.absoluteUrl,
+        listName:this.properties.listName
       }
     );
 

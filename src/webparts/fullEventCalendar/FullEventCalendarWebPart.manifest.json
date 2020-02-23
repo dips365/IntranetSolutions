@@ -21,7 +21,8 @@
     "description": { "default": "Display the items in event list in sharepoint" },
     "officeFabricIconFontName": "Page",
     "properties": {
-      "description": "Full-Event-Calendar"
+      "description": "Full-Event-Calendar",
+      "listName":"EventsCalendar"
     }
   }]
 }
