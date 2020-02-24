@@ -40,8 +40,7 @@ export default class FullEventCalendar extends React.Component<IFullEventCalenda
 
   private _loadEvents(startDate:Date,endDate:Date) {
     try {
-      let getEventList = this.props.siteURL + `/_api/web/Lists/GetByTitle('EventsCalendar')/items?$select=*`;
-
+      let getEventList = this.props.siteURL + `/_api/web/Lists/GetByTitle('EventsCalendar')/items?$select=*&$filter=EventDate ge datetime'${startDate.toISOString()}' and EndDate le datetime'${endDate.toISOString()}'`;
       this.props.spHttpClient.get(getEventList,
         SPHttpClient.configurations.v1,
         {
@@ -54,9 +53,9 @@ export default class FullEventCalendar extends React.Component<IFullEventCalenda
           return response.json();
         })
         .then((response:{value:any}):void=>{
+          var events:Array<EventInput> = new Array<EventInput>();
             if(response.value.length!=0){
-            var events:Array<EventInput> = new Array<EventInput>();
-            response.value.map((item:any)=>{
+             response.value.map((item:any)=>{
 
               //let currentStartDate = moment.tz(item.EventDate.dateTime, item.EventDate.timeZone);
               // let currentEndDate = moment.tz(item.EndDate.dateTime, item.EndDate.timeZone);
