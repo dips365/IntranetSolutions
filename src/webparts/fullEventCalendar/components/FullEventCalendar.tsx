@@ -58,8 +58,11 @@ export default class FullEventCalendar extends React.Component<IFullEventCalenda
             var events:Array<EventInput> = new Array<EventInput>();
             response.value.map((item:any)=>{
 
-              let currentStartDate = moment.tz(item.EventDate.dateTime, item.EventDate.timeZone);
-              let currentEndDate = moment.tz(item.EndDate.dateTime, item.EndDate.timeZone);
+              //let currentStartDate = moment.tz(item.EventDate.dateTime, item.EventDate.timeZone);
+              // let currentEndDate = moment.tz(item.EndDate.dateTime, item.EndDate.timeZone);
+
+              let currentStartDate = moment.tz(item.EventDate,item.EventDate);
+              let currentEndDate = moment.tz(item.EndDate, item.EndDate);
 
               var t = "";
               events.push({
@@ -122,7 +125,7 @@ export default class FullEventCalendar extends React.Component<IFullEventCalenda
           height={this.state.height}
           events={this.state.events} />
         {this.state.currentSelectedEvent &&
-          <Panel>
+          <Panel
             isOpen={this.state.isEventDetailsOpen}
             type={ PanelType.smallFixedFar }
             headerText={this.state.currentSelectedEvent ? this.state.currentSelectedEvent.title : ""}
@@ -131,7 +134,7 @@ export default class FullEventCalendar extends React.Component<IFullEventCalenda
             closeButtonAriaLabel='Close'>
             <h3>Start Time</h3>
             <span>{moment(this.state.currentSelectedEvent.start).format('MMMM Do YYYY [at] h:mm:ss a')}</span>
-            <h3>Start Time</h3>
+            <h3>End Time</h3>
             <span>{moment(this.state.currentSelectedEvent.end).format('MMMM Do YYYY [at] h:mm:ss a')}</span>
             {this.state.currentSelectedEvent.extendedProps["location"] &&
               <div>
