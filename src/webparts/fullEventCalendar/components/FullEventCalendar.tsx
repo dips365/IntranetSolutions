@@ -29,10 +29,10 @@ export default class FullEventCalendar extends React.Component<IFullEventCalenda
     };
   }
   public componentDidMount():void{
-    let startDate = this.calendar.value.getApi().view.activeStart;
-    let endDate = this.calendar.value.getApi().view.activeEnd;
+    // let startDate = this.calendar.value.getApi().view.activeStart;
+    // let endDate = this.calendar.value.getApi().view.activeEnd;
 
-    this._loadEvents(startDate,endDate);
+    //this._loadEvents(startDate,endDate);
   }
   private _calculateHeight(): number {
       return 600;
@@ -113,43 +113,124 @@ export default class FullEventCalendar extends React.Component<IFullEventCalenda
   }
 
   public render(): React.ReactElement<IFullEventCalendarProps> {
+
+
     return(
-      <div className={ styles.fullEventCalendar }>
-        <FullCalendar
-          ref={this.calendar}
-          defaultView="dayGridMonth"
-          plugins={[ dayGridPlugin ]}
-          datesRender={this._datesRender.bind(this)}
-          eventClick={this._openEventPanel.bind(this)}
-          height={this.state.height}
-          events={this.state.events} />
-        {this.state.currentSelectedEvent &&
-          <Panel
-            isOpen={this.state.isEventDetailsOpen}
-            type={ PanelType.smallFixedFar }
-            headerText={this.state.currentSelectedEvent ? this.state.currentSelectedEvent.title : ""}
-            onDismiss={this._closeEventPanel.bind(this)}
-            isLightDismiss={true}
-            closeButtonAriaLabel='Close'>
-            <h3>Start Time</h3>
-            <span>{moment(this.state.currentSelectedEvent.start).format('MMMM Do YYYY [at] h:mm:ss a')}</span>
-            <h3>End Time</h3>
-            <span>{moment(this.state.currentSelectedEvent.end).format('MMMM Do YYYY [at] h:mm:ss a')}</span>
-            {this.state.currentSelectedEvent.extendedProps["location"] &&
-              <div>
-                <h3>Location</h3>
-                <span>{this.state.currentSelectedEvent.extendedProps["location"]}</span>
-              </div>
-            }
-            {this.state.currentSelectedEvent.extendedProps["body"] &&
-              <div>
-                <h3>Body</h3>
-                <span>{this.state.currentSelectedEvent.extendedProps["body"]}</span>
-              </div>
-            }
-          </Panel>
-        }
-      </div>
+      <div className={styles.fullEventCalendar}>
+	  <div className={styles.event}>
+	  <div className={styles.titlecontainer}>
+		<div className={styles.col}>
+		  <h5 className={styles.titlehead}>Title</h5>
+		  <p className={styles.maintitle}>Test Event Title</p>
+		</div>
+	  </div>
+	  <div className={styles.colcontainer}>
+		<div className={styles.col}>
+		  <span>Created By - </span>
+		  <div className={styles.chip}>
+			<img src="/../sites/Home/PublishingImages/userimage.png" alt="" width="96" height="96" />
+			Test User
+			  </div>
+		</div>
+	  </div>
+	</div>
+	<div className={styles.hoveron}>
+	  <div className={styles.colcontainer}>
+		<div className={styles.col}>
+		  <h5>Start Date</h5>
+		  <p className={styles.dates}>22 February 2020</p>
+		  <p className={styles.times}>9:00 AM</p>
+		</div>
+		<div className={styles.col}>
+		  <h5>End Date</h5>
+		  <p className={styles.dates}>26 February 2020</p>
+		  <p className={styles.times}>7:45 PM</p>
+		</div>
+	  </div>
+	  <div className={styles.colcontainer}>
+		<div className={styles.col}>
+		  <h5>Description</h5>
+		  <p className={styles.desc}>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of
+		classical Latin literature from 45 BC, making it over 2000 years old</p>
+		</div>
+	  </div>
+	</div>
+
+	<div className={styles.event}>
+	  <div className={styles.titlecontainer}>
+		<div className={styles.col}>
+		  <h5 className={styles.titlehead}>Title</h5>
+		  <p className={styles.maintitle}>Test Event Title</p>
+		</div>
+	  </div>
+	  <div className={styles.colcontainer}>
+		<div className={styles.col}>
+		  <span>Created By - </span>
+		  <div className={styles.chip}>
+			<img src="/../sites/Home/PublishingImages/userimage.png" alt="" width="96" height="96" />
+			Test User
+			  </div>
+		</div>
+	  </div>
+	</div>
+	<div className={styles.hoveron}>
+	  <div className={styles.colcontainer}>
+		<div className={styles.col}>
+		  <h5>Start Date</h5>
+		  <p className={styles.dates}>22 February 2020</p>
+		  <p className={styles.times}>9:00 AM</p>
+		</div>
+		<div className={styles.col}>
+		  <h5>End Date</h5>
+		  <p className={styles.dates}>26 February 2020</p>
+		  <p className={styles.times}>7:45 PM</p>
+		</div>
+	  </div>
+	  <div className={styles.colcontainer}>
+		<div className={styles.col}>
+		  <h5>Description</h5>
+		  <p className={styles.desc}>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of
+		classical Latin literature from 45 BC, making it over 2000 years old</p>
+		</div>
+	  </div>
+	</div>
+  </div>
+      // <div className={ styles.fullEventCalendar }>
+      //   <FullCalendar
+      //     ref={this.calendar}
+      //     defaultView="dayGridMonth"
+      //     plugins={[ dayGridPlugin ]}
+      //     datesRender={this._datesRender.bind(this)}
+      //     eventClick={this._openEventPanel.bind(this)}
+      //     height={this.state.height}
+      //     events={this.state.events} />
+      //   {this.state.currentSelectedEvent &&
+      //     <Panel
+      //       isOpen={this.state.isEventDetailsOpen}
+      //       type={ PanelType.smallFixedFar }
+      //       headerText={this.state.currentSelectedEvent ? this.state.currentSelectedEvent.title : ""}
+      //       onDismiss={this._closeEventPanel.bind(this)}
+      //       isLightDismiss={true}
+      //       closeButtonAriaLabel='Close'>
+      //       <h3>Start Time</h3>
+      //       <span>{moment(this.state.currentSelectedEvent.start).format('MMMM Do YYYY [at] h:mm:ss a')}</span>
+      //       <h3>End Time</h3>
+      //       <span>{moment(this.state.currentSelectedEvent.end).format('MMMM Do YYYY [at] h:mm:ss a')}</span>
+      //       {this.state.currentSelectedEvent.extendedProps["location"] &&
+      //         <div>
+      //           <h3>Location</h3>
+      //           <span>{this.state.currentSelectedEvent.extendedProps["location"]}</span>
+      //         </div>
+      //       }
+      //       {this.state.currentSelectedEvent.extendedProps["body"] &&
+      //         <div>
+      //           <h3>Body</h3>
+      //           <span>{this.state.currentSelectedEvent.extendedProps["body"]}</span>
+      //         </div>
+      //       }
+      //     </Panel>
+      //   }
+      // </div>
     );
   }
 }
