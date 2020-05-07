@@ -5,21 +5,13 @@
     "id": "82d622f3-aece-4bc2-a13e-14dd3f51df26",
     "version": "1.0.0.0",
     "includeClientSideAssets": true,
-    "isDomainIsolated": false
-    // "features": [{
-    //   "title": "asset-deployment-webpart-client-side-solution",
-    //   "description": "asset-deployment-webpart-client-side-solution",
-    //   "id": "E3037B74-9462-41A4-98F4-6DE3EABE147F",
-    //   "version": "1.0.0.0",
-    //   "assets": {
-    //     "elementManifests": [
-    //       "elements.xml"
-    //     ],
-    //     "elementFiles":[
-    //       "schema.xml"
-    //     ]
-    //   }
-    // }]
+    "isDomainIsolated": true,
+    "webApiPermissionRequests": [
+      {
+        "resource": "Microsoft Graph",
+        "scope": "User.Read"
+      }
+    ]
   },
   "paths": {
     "zippedPackage": "solution/intranet-solutions.sppkg"

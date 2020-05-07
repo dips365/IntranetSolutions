@@ -5,6 +5,7 @@ import { IStackTokens, Stack  } from "office-ui-fabric-react/lib/Stack";
 import { Dropdown, DropdownMenuItemType, IDropdownStyles, IDropdownOption } from 'office-ui-fabric-react/lib/Dropdown';
 import { IListItem } from "../models/IListItem";
 import { IHolidayListItem } from "../models/IHolidayListItem";
+import { MSGraphClient,MSGraphClientFactory } from "@microsoft/sp-http";
 import { List } from "office-ui-fabric-react/lib/List";
 import { Environment,EnvironmentType, DisplayMode } from "@microsoft/sp-core-library";
 const dropdownStyles: Partial<IDropdownStyles> = {
@@ -16,6 +17,7 @@ import { escape } from '@microsoft/sp-lodash-subset';
 import { ICountryWiseHolidaysState } from "./ICountryWiseHolidaysState";
 import { SPHttpClient,SPHttpClientResponse,ISPHttpClientOptions } from "@microsoft/sp-http";
 import { WebPartTitle } from "@pnp/spfx-controls-react/lib/WebPartTitle";
+import { MSGraphService } from "../../../Services/MsGraphService";
 const options: IDropdownOption[] = [
   { key: 'India', text: 'India',isSelected:true},
   { key: 'US', text: 'US' },
@@ -43,9 +45,36 @@ export default class CountryWiseHolidays extends React.Component<ICountryWiseHol
       selectedValue:"India",
       HolidayItems:[]
     };
-    this.GetCurrentCountryFromUserProfile();
-    this.getHolidaysBasedOnSelectedCountry(this.state.selectedValue.toString());
+    this._getMyCountry();
+    //this.getHolidaysBasedOnSelectedCountry(this.state.selectedValue.toString());
   }
+
+  private _getMyCountry = ()=>{
+    try {
+
+
+      this.props.context.msGraphClientFactory.getClient().then((client:MSGraphClient):void=>{
+        client.api("/me/country").version("v1.0").select("*").get((err,res)=>{
+            if(err){
+              console.log("CountryWiseHolidays._getMyCountry error : ",err);
+            }
+            if(res){
+              console.log(res);
+            }
+        });
+      });
+
+
+
+      // this.setState({isLoading:true},async()=>{
+      //   debugger;
+      //   let countryName = MSGraphService.GetMyCountry(this.props.context);
+      // });
+    } catch (error) {
+      console.log("CountryWiseHolidays._getMyCountry error : ",error);
+    }
+  }
+
   public render(): React.ReactElement<ICountryWiseHolidaysProps> {
     return (
       <div className={ styles.countryWiseHolidays }>
@@ -82,13 +111,10 @@ export default class CountryWiseHolidays extends React.Component<ICountryWiseHol
       </div>
     );
   }
-
-
   private onChanged(event){
     var newValue = event.key;
     this.getHolidaysBasedOnSelectedCountry(newValue);
   }
-
   private onChange=(ev:any,selectedOption:IDropdownOption | undefined):void=>{
     const selectedKey: string = selectedOption ? (selectedOption.key as string):"";
     this.setState({

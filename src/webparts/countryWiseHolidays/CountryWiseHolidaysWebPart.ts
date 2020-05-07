@@ -30,6 +30,7 @@ export default class CountryWiseHolidaysWebPart extends BaseClientSideWebPart<IC
         listName:this.properties.listName,
         spHttpClient:this.context.spHttpClient,
         siteUrl:this.context.pageContext.site.absoluteUrl,
+        context:this.context,
         title:"Country Wise Holidays",
         displayMode: this.displayMode,
         country:this.context.pageContext.cultureInfo.currentCultureName,

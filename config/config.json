@@ -9,20 +9,11 @@
           "manifest": "./src/webparts/countryWiseHolidays/CountryWiseHolidaysWebPart.manifest.json"
         }
       ]
-    },
-    "full-event-calendar-web-part": {
-      "components": [
-        {
-          "entrypoint": "./lib/webparts/fullEventCalendar/FullEventCalendarWebPart.js",
-          "manifest": "./src/webparts/fullEventCalendar/FullEventCalendarWebPart.manifest.json"
-        }
-      ]
     }
   },
   "externals": {},
   "localizedResources": {
     "CountryWiseHolidaysWebPartStrings": "lib/webparts/countryWiseHolidays/loc/{locale}.js",
-    "ControlStrings": "node_modules/@pnp/spfx-controls-react/lib/loc/{locale}.js",
-    "FullEventCalendarWebPartStrings": "lib/webparts/fullEventCalendar/loc/{locale}.js"
+    "ControlStrings": "node_modules/@pnp/spfx-controls-react/lib/loc/{locale}.js"
   }
 }
