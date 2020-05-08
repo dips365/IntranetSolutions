@@ -124,7 +124,7 @@
     background-color: rgb(237, 28, 36);
     padding: 5px 0px;
     text-align: center;
-    text-transform: uppercase;
+    // text-transform: uppercase;
   }
 
   .day {
@@ -160,7 +160,6 @@
     margin: 0px;
     color: #5d5d5d;
   }
-
   @media (min-width: 554px) {
     .eventlist>li {
       position: relative;
@@ -173,7 +172,7 @@
     }
 
     .eventlist>li>.info {
-      background-color: #ffeded;;
+      // background-color: #ffeded;;
       overflow: hidden;
     }
 
@@ -182,7 +181,7 @@
       height: 40px;
       padding: 0px;
       margin: 0px;
-      border-radius: 50px;
+      // border-radius: 50px;
       float: left;
     }
 
@@ -202,8 +201,5 @@
       left: 0px;
       bottom: 0px;
     }
-
-
   }
-
 }
